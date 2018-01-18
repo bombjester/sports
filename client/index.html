@@ -1,0 +1,89 @@
+<html ng-app="app">
+<head>
+	<title>test</title>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
+  <script>
+
+  var angular = angular.module('app', ['ngRoute']);
+
+
+		//routing
+        angular.config(function($routeProvider, $locationProvider){
+        $routeProvider
+
+        .when('/',{
+          templateUrl: 'static/partials/main.html'
+        })
+         .when('/profile',{
+          templateUrl: 'static/partials/profile.html'
+        })
+        .otherwise({
+          redirectTo: '/'
+        });
+
+      });
+    angular.controller('signupcontroller', function($scope, signupfactory){
+      $scope.errors = "";
+      $scope.signup = function(){
+        console.log($scope.box);
+        signupfactory.signup($scope.box, function(callback){
+          $scope.errors = callback;
+        })
+        $scope.box = {};
+      }
+      $scope.login = function(){
+        signupfactory.login($scope.loginbox, function(callback){
+          $scope.errors = callback;
+          console.log($scope.errors);
+          
+        })
+        $scope.loginbox = {};
+      }
+    })
+
+
+
+    angular.factory("signupfactory", function($http, $location){
+      var functions = {};
+      var errors = "";
+      functions.signup = function(data){
+        $http.post('/signup', data).success(function(result){
+            console.log("done with signup");
+        })
+      }
+      functions.login = function(data, callback){
+        $http.post('/login', data).success(function(result){
+
+          //console.log(result);
+          if(result == "Success Loggging In"){
+            $location.path("/profile");
+          }
+          else{
+            errors = result;
+            callback(errors);
+          }
+        })
+      }
+
+
+      return functions; 
+    })
+    angular.controller("apicontroller", function($scope, apifactory){
+      apifactory.tests();
+    })
+    angular.factory("apifactory", function($http){
+      var functions = {};
+        functions.tests = function(){
+          $http.get('/test').success(function(result){
+
+          })
+        }
+      return functions;
+    })
+   </script>
+</head>
+<body>
+	<div ng-view=""></div>
+</body>
+</html>

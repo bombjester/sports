@@ -1,0 +1,29 @@
+{
+  "name": "sports",
+  "description": "highlights",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "ejs": "1.0.0",
+    "express": "~4.10.0",
+    "mongoose": "^4.4.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines":{
+    "node":"5.5.0"
+  },
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  
+  "keywords": [
+    "sports_highlights"
+  ],
+  "author": "Eric Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bombjester/website/issues"
+  }
+  
+}
