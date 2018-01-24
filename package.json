@@ -10,16 +10,10 @@
     "moment":"latest",
     "osmosis":"latest"
   },
-  "scripts": {
-    "start": "node server.js"
-  },
   "engines":{
     "node":"5.5.0"
   },
   "version": "1.0.0",
-  "main": "server.js",
-  "devDependencies": {},
-  
   "keywords": [
     "sports_highlights"
   ],
