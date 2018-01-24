@@ -12,6 +12,7 @@
     "gosugamers-api": "latest"
   },
   "engines": {
-    "node": "8.9.4"
+    "node": "8.9.4",
+    "npm": "5.6.0"
   }
 }
