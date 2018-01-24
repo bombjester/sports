@@ -8,7 +8,10 @@ module.exports = function(app){
 	app.post('/login', function(req,res){
 		doge.login(req,res);
 	})
-	app.get('/test', function(req,res){
-		doge.test(req,res);
+	app.get('/getdotavods', function(req,res){
+		doge.getdotavods(req,res);
+	})
+	app.get("/getnba", function(req,res){
+		doge.getnba(req,res);
 	})
 }

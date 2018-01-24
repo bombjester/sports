@@ -70,15 +70,32 @@
       return functions; 
     })
     angular.controller("apicontroller", function($scope, apifactory){
-      apifactory.tests();
+      $scope.dotavods = [];
+      $scope.nbavods = [];
+      apifactory.getdotavods(function(callback){
+        console.log(callback);
+        $scope.dotavods = callback;
+      });
+      apifactory.getnba(function(callback){
+        $scope.nbavods = callback;
+      });
     })
     angular.factory("apifactory", function($http){
       var functions = {};
-        functions.tests = function(){
-          $http.get('/test').success(function(result){
-
+      var dotavods = [];
+      functions.getnba = function(callback){
+        $http.get('/getnba').success(function(result){
+          dotavods = result;
+          callback(dotavods);
+        })
+      }
+      functions.getdotavods = function(callback){
+          $http.get('/getdotavods').success(function(result){
+            //console.log(result);
+            dotavods = result;
+            callback(dotavods);
           })
-        }
+      }
       return functions;
     })
    </script>

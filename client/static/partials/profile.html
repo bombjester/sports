@@ -5,10 +5,14 @@
 <body>
 	<h1> You are now logged in</h1>
 	<div ng-controller="apicontroller">
-		<video width="320" height="240" controls>
-  <source src="http://video.nfl.com/films/2015/NFL_NETWORK/SHOW/NFL_TOTAL_ACCESS/OFF/26/150612_nfln_nflta_top_5_sb_unsung_heroes_232444_700k.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+
+	<h1> Dota Highlights</h1>
+		<p ng-repeat="index in dotavods">{{index.Team}}  <a href="http://www.gosugamers.net{{index.hyperlink}}">Link</a> Date Added: {{index.date_added}}</p>
+	<h1> NBA Highlights</h1>
+		<p ng-repeat="index in nbavods">{{index.Title}}
+			<a href="https://www.youtube.com/watch?v={{index.videoID}}"><img src="{{index.Thumbnail}}"></a>
+		
+		</p>
 	</div>
 </body>
 </html>
