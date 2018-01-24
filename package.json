@@ -13,15 +13,6 @@
   },
   "engines":{
     "node":"5.5.0"
-  },
-  "version": "1.0.0",
-  "keywords": [
-    "sports_highlights"
-  ],
-  "author": "Eric Lee",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bombjester/sports"
   }
   
 }
