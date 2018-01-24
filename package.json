@@ -12,7 +12,7 @@
     "gosugamers-api": "latest"
   },
   "engines":{
-    "node":"5.5.0"
+    "node":"latest"
   }
   
 }
