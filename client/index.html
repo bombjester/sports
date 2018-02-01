@@ -72,9 +72,22 @@
     angular.controller("apicontroller", function($scope, apifactory){
       $scope.dotavods = [];
       $scope.nbavods = [];
+      $scope.dotatourneys = [];
+      $scope.nbaschedule = [];
+      apifactory.getnbaschedule(function(callback){
+        $scope.nbaschedule = callback;
+      })
+
+
+
+
       apifactory.getdotavods(function(callback){
-        console.log(callback);
+        //console.log(callback);
         $scope.dotavods = callback;
+      });
+      apifactory.getdotatourneys(function(callback){
+        console.log(callback);
+        $scope.dotatourneys = callback;
       });
       apifactory.getnba(function(callback){
         $scope.nbavods = callback;
@@ -83,6 +96,21 @@
     angular.factory("apifactory", function($http){
       var functions = {};
       var dotavods = [];
+      var dotatourneys = [];
+      var nbaschedule = [];
+      functions.getnbaschedule = function(callback){
+        $http.get('/getnbaschedule').success(function(result){
+          nbaschedule = result;
+          callback(nbaschedule);
+        })
+      }
+      functions.getdotatourneys = function(callback){
+        $http.get('/getdotatourneys').success(function(result){
+          dotatourneys = result;
+
+          callback(dotatourneys);
+        })
+      }
       functions.getnba = function(callback){
         $http.get('/getnba').success(function(result){
           dotavods = result;

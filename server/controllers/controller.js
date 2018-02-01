@@ -73,10 +73,10 @@ module.exports = (function() {
 			//Gosu.fetchMatchUrls('dota2', function(err, urls) {
   				//console.log(urls);
 
+  			
+  			
+  			
 
-  			
-  			
-  			
 			osmosis.get('http://www.gosugamers.net/dota2/vods')
   			.find('#videos/tbody/tr/td/a[span.opp1 and span.opp2]')
   			.set("data")
@@ -111,6 +111,8 @@ module.exports = (function() {
   						for (var index in linkarray){
   							finalarray.push({Team: teamarray[index], hyperlink: linkarray[index].link, date_added: datearray[index].date})
   						}
+  						
+  						//console.log(finaldotatourney);
   						res.json(finalarray);
   						
   					})
@@ -124,7 +126,6 @@ module.exports = (function() {
 		},
 		getnba: function(req,res){
 			var array = [];
-			console.log("get here");
 			//console.log(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
 			request('https://www.googleapis.com/youtube/v3/search?key=AIzaSyD264dgINbnjfJLCHpYrWST6iKZdJ-RVG8&channelId=UCLd4dSmXdrJykO_hgOzbfPw&part=snippet,id&order=date&maxResults=30', function (error, response, body) {
 			 // console.log('error:', error); // Print the error if one occurred
@@ -145,6 +146,74 @@ module.exports = (function() {
 			 	res.json(array);
 			});
 			
+		},
+		getdotatourneys: function(req,res){
+			var finaldotatourney = [];
+			var dotatemp = [];
+			var dotatemp2 = [];
+			//Gosu.fetchMatchUrls('dota2', function(err, urls) {
+  				//console.log(urls);
+
+  			osmosis.get("http://liquipedia.net/dota2/Main_Page")
+  			.find("//*[@id='mw-content-text']/div[4]/div[1]/div/div[1]/div[1]/div[2]/ul/li[2]/ul/li/a/span")
+  			.set("tourneys")
+  			.data(function(results){
+  				dotatemp.push(results.tourneys);
+  				//console.log(results, "dota tourney");
+  			})
+  			osmosis.get("http://liquipedia.net/dota2/Main_Page")
+  			.find("//*[@id='mw-content-text']/div[4]/div[1]/div/div[1]/div[1]/div[2]/ul/li[2]/ul/li/a/@href")
+  			.set("hrefs")
+  			.data(function(results){
+  				dotatemp2.push(results.hrefs);
+  				//console.log(results, "dota href");
+  				
+
+  			})
+  			.done(function(){
+  				for (x in dotatemp){
+  					finaldotatourney.push({Tournament: dotatemp[x], href: dotatemp2[x]});
+  				}
+  				res.json(finaldotatourney);
+  			})
+		},
+
+		getnbaschedule: function(req,res){
+			var hrefs = [];
+			osmosis.get("https://www.reddit.com/r/nbastreams/")
+			.find("//*[@id='siteTable']/div/div/div/p/a/@href")
+			.set("hrefs")
+			.data(function(results){
+				hrefs.push(results);
+			})
+			.done(function(){
+				request('http://www.espn.com/nba/bottomline/scores', function (error, response, body) {
+				//console.log(body);
+					var regex = /left\s*(.*?)\s*nba/g;
+					var matches = [];
+					while(m = regex.exec(body)){
+						matches.push(m[1]);
+					}
+					
+					for (x in matches){
+						//console.log(matches[x]);
+						matches[x] = matches[x].replace(/%20/g, " ");
+						matches[x] = matches[x].replace("&", "");
+						matches[x] = matches[x].replace(/\d=/gm, "");
+						matches[x] = matches[x].replace("^", "");
+					}
+					console.log(matches);
+					console.log(hrefs);
+
+					res.json(matches);
+
+				});
+
+			})
+			
+
+			
+
 		},
 
 	

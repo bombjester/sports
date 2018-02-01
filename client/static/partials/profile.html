@@ -5,9 +5,13 @@
 <body>
 	<h1> You are now logged in</h1>
 	<div ng-controller="apicontroller">
-
+	<h2> Ongoing Dota Tournaments (May be limited requests)local</h2>
+	<p ng-repeat="index in dotatourneys"><a href="http://liquipedia.net{{index.href}}#Group_Stage">{{index.Tournament}}</a></p>
 	<h1> Dota Highlights</h1>
+
 		<p ng-repeat="index in dotavods">{{index.Team}}  <a href="http://www.gosugamers.net{{index.hyperlink}}">Link</a> Date Added: {{index.date_added}}</p>
+	<h2> Today's NBA Games</h2>
+		<p ng-repeat="index in nbaschedule">{{index}}</p>
 	<h1> NBA Highlights</h1>
 		<p ng-repeat="index in nbavods">{{index.Title}}
 			<a href="https://www.youtube.com/watch?v={{index.videoID}}"><img src="{{index.Thumbnail}}"></a>

@@ -14,4 +14,10 @@ module.exports = function(app){
 	app.get("/getnba", function(req,res){
 		doge.getnba(req,res);
 	})
+	app.get("/getdotatourneys", function(req,res){
+		doge.getdotatourneys(req,res);
+	})
+	app.get("/getnbaschedule", function(req,res){
+		doge.getnbaschedule(req,res);
+	})
 }
