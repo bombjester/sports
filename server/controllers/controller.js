@@ -180,12 +180,18 @@ module.exports = (function() {
 
 		getnbaschedule: function(req,res){
 			var hrefs = [];
+			var finalarray = [];
 			osmosis.get("https://www.reddit.com/r/nbastreams/")
 			.find("//*[@id='siteTable']/div/div/div/p/a/@href")
 			.set("hrefs")
 			.data(function(results){
-				hrefs.push(results);
+				//console.log(results.hrefs);
+				if(results.hrefs.search("/game_thread_") >=1){
+					hrefs.push(results);
+				}
 			})
+				
+				
 			.done(function(){
 				request('http://www.espn.com/nba/bottomline/scores', function (error, response, body) {
 				//console.log(body);
@@ -202,10 +208,29 @@ module.exports = (function() {
 						matches[x] = matches[x].replace(/\d=/gm, "");
 						matches[x] = matches[x].replace("^", "");
 					}
-					console.log(matches);
-					console.log(hrefs);
+			
+					//console.log(matches);
+					//console.log(hrefs);
+					for (x in matches){
+						var pushed = false;
+						var wordmatch = matches[x].substring(0, matches[x].indexOf(" ")).toLowerCase();
+						//console.log(wordmatch);
+						for( y in hrefs){
+							//console.log(hrefs[y].hrefs);
+							if(hrefs[y].hrefs.search(wordmatch)>=1){
+								finalarray.push({game: matches[x], href: hrefs[y].hrefs});
+								pushed = true;
+							}
+						}
+						if (pushed == false){
 
-					res.json(matches);
+							finalarray.push({game: matches[x], href: "None"});
+							
+						}
+
+					}
+					//console.log(finalarray);
+					res.json(finalarray);
 
 				});
 
