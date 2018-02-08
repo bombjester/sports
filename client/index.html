@@ -3,6 +3,7 @@
 	<title>test</title>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="profile.css">
   <script>
 
   var angular = angular.module('app', ['ngRoute']);
@@ -13,13 +14,13 @@
         $routeProvider
 
         .when('/',{
-          templateUrl: 'static/partials/main.html'
+          templateUrl: 'static/partials/profile.html' //static/partials/main.html
         })
          .when('/profile',{
           templateUrl: 'static/partials/profile.html'
         })
         .otherwise({
-          redirectTo: '/'
+          redirectTo: 'static/partials/profile.html'
         });
 
       });

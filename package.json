@@ -2,14 +2,17 @@
   "name": "sports",
   "description": "highlights",
   "dependencies": {
+    "@angular/animations": "^5.2.3",
+    "@angular/cdk": "^5.2.0",
+    "@angular/material": "^5.2.0",
     "body-parser": "^1.14.2",
     "ejs": "1.0.0",
     "express": "~4.10.0",
-    "mongoose": "^4.4.2",
-    "request": "latest",
+    "gosugamers-api": "latest",
     "moment": "latest",
+    "mongoose": "^4.4.2",
     "osmosis": "latest",
-    "gosugamers-api": "latest"
+    "request": "latest"
   },
   "engines": {
     "node": "8.9.4",
