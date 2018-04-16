@@ -65,6 +65,7 @@ module.exports = (function() {
 			})
 		},
 		getdotavods: function(req,res){
+
 			var teamarray = [];
 			var datearray = [];
 			var linkarray = [];
@@ -143,6 +144,7 @@ module.exports = (function() {
 			 			//console.log(jsonfied.items[x].snippet.description, jsonfied.items[x].id.videoId, jsonfied.items[x].snippet.title,jsonfied.items[x].snippet.thumbnails.default.url );
 			 		}
 			 	}
+			 	//console.log(array);
 			 	res.json(array);
 			});
 			

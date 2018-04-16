@@ -1,9 +1,13 @@
 <html ng-app="app">
 <head>
 	<title>test</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
+  
   <link rel="stylesheet" type="text/css" href="profile.css">
+  <link rel="stylesheet" type="text/css" href="main.css">
   <script>
 
   var angular = angular.module('app', ['ngRoute']);
@@ -71,12 +75,35 @@
       return functions; 
     })
     angular.controller("apicontroller", function($scope, apifactory){
+      $scope.dota = false;
+      $scope.home = true;
+      $scope.show = false;
+      $scope.loaded = true;
       $scope.dotavods = [];
       $scope.nbavods = [];
       $scope.dotatourneys = [];
       $scope.nbaschedule = [];
+      $scope.homecss = "nav-link active";
+      $scope.dotacss = "nav-link";
+      $scope.dotatab = function(){
+        console.log("clicked");
+        $scope.dota = true;
+        $scope.home = false;
+        $scope.homecss = "nav-link";
+        $scope.dotacss = "nav-link active";
+      }
+      $scope.hometab = function(){
+        $scope.dota = false;
+        $scope.home = true;
+        $scope.homecss = "nav-link active";
+        $scope.dotacss = "nav-link";
+      }
+      $scope.showcard = function(){
+        $scope.show = true;
+      }
       apifactory.getnbaschedule(function(callback){
         $scope.nbaschedule = callback;
+        $scope.loaded = false;
       })
 
 
