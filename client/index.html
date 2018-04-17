@@ -1,6 +1,6 @@
 <html ng-app="app">
 <head>
-	<title>test</title>
+	<title>Today's Sports</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
@@ -76,6 +76,7 @@
     })
     angular.controller("apicontroller", function($scope, apifactory){
       $scope.dota = false;
+      $scope.nhl = false;
       $scope.home = true;
       $scope.show = false;
       $scope.loaded = true;
@@ -83,49 +84,98 @@
       $scope.nbavods = [];
       $scope.dotatourneys = [];
       $scope.nbaschedule = [];
+      $scope.nhlvods = [];
+      $scope.dotagames = [];
+      $scope.nhlgames = [];
       $scope.homecss = "nav-link active";
       $scope.dotacss = "nav-link";
+      $scope.nhlcss = "nav-link";
       $scope.dotatab = function(){
-        console.log("clicked");
         $scope.dota = true;
         $scope.home = false;
+        $scope.nhl = false;
         $scope.homecss = "nav-link";
         $scope.dotacss = "nav-link active";
+        $scope.nhlcss = "nav-link";
       }
       $scope.hometab = function(){
         $scope.dota = false;
+        $scope.nhl = false;
         $scope.home = true;
         $scope.homecss = "nav-link active";
         $scope.dotacss = "nav-link";
+        $scope.nhlcss = "nav-link";
+      }
+      $scope.nhltab = function(){
+        $scope.dota = false;
+        $scope.nhl = true;
+        $scope.home = false;
+        $scope.homecss = "nav-link";
+        $scope.dotacss = "nav-link";
+        $scope.nhlcss = "nav-link active"
       }
       $scope.showcard = function(){
-        $scope.show = true;
+        apifactory.getnhlvods(function(callback){
+          $scope.nhlvods = callback;
+          $scope.show = true;
+        })
+        
       }
       apifactory.getnbaschedule(function(callback){
         $scope.nbaschedule = callback;
         $scope.loaded = false;
       })
-
-
-
-
       apifactory.getdotavods(function(callback){
         //console.log(callback);
         $scope.dotavods = callback;
       });
       apifactory.getdotatourneys(function(callback){
-        console.log(callback);
+       // console.log(callback);
         $scope.dotatourneys = callback;
       });
       apifactory.getnba(function(callback){
         $scope.nbavods = callback;
       });
-    })
+      // apifactory.getdotagames(function(callback){
+      //   $scope.dotagames = callback;
+      //   //console.log($scope.dotagames);
+      //   $scope.loaded = false;
+      // });
+      apifactory.getnhl(function(callback){
+
+        $scope.nhlgames = callback;
+       // console.log($scope.nhlgames);
+        $scope.loaded = false;
+      });
+    });
+
     angular.factory("apifactory", function($http){
       var functions = {};
       var dotavods = [];
       var dotatourneys = [];
       var nbaschedule = [];
+      var nhlgames = [];
+      var nhlvods = [];
+      var dotagames = [];
+
+      functions.getdotagames = function(callback){
+        $http.get('/getdotagames').success(function(result){
+          dotagames = result;
+          callback(dotagames);
+        })
+      }
+      functions.getnhlvods = function(callback){
+        $http.get('/getnhlvods').success(function(result){
+          nhlvods = result;
+          callback(nhlvods);
+        })
+      }
+      functions.getnhl = function(callback){
+        $http.get('/getnhlgames').success(function(result){
+          nhlgames = result;
+          callback(nhlgames);
+        })
+      }
       functions.getnbaschedule = function(callback){
         $http.get('/getnbaschedule').success(function(result){
           nbaschedule = result;

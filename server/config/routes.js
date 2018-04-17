@@ -20,4 +20,13 @@ module.exports = function(app){
 	app.get("/getnbaschedule", function(req,res){
 		doge.getnbaschedule(req,res);
 	})
+	app.get("/getnhlgames", function(req,res){
+		doge.getnhlgames(req,res);
+	})
+	app.get("/getnhlvods", function(req,res){
+		doge.getnhlvods(req,res);
+	})
+	app.get("/getdotagames", function(req,res){
+		doge.getdotagames(req,res);
+	})
 }

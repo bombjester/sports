@@ -12,7 +12,8 @@
     "moment": "latest",
     "mongoose": "^4.4.2",
     "osmosis": "latest",
-    "request": "latest"
+    "request": "latest",
+    "moment-timezone": "latest"
   },
   "engines": {
     "node": "8.9.4",

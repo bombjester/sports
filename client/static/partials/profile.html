@@ -16,16 +16,17 @@
 		  <li class="nav-item">
 		    <a ng-class="dotacss" href="" ng-click="dotatab()">Dota</a>
 		  </li>
-		  <!-- <li class="nav-item">
-		    <a class="nav-link" href="">Link</a>
-		  </li>
 		  <li class="nav-item">
+		    <a ng-class="nhlcss" ng-click="nhltab()" href="">NHL</a>
+		  </li>
+		  <!-- <li class="nav-item">
 		    <a class="nav-link disabled" href="#">Disabled</a>
 		  </li> -->
 		</ul>
 		<div class="nba row" ng-if="home">
 			<div class="column">
 				<h2> Today's NBA Games</h2>
+					<h4 ng-show="loaded"> Matching Links with Games... </h4>
 					<div ng-show="loaded"  class="progress">
   						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 					</div>
@@ -50,18 +51,49 @@
 			</div>
 		</div>
 		<div class="dota row" ng-if="dota">
-			<h1>Website blocked :( (will update in the future)</h1>
+			
 			<p></p>
 			<div class="column">
-			<h2> Ongoing Dota Tournaments (May be limited requests)local</h2>
-			<p ng-repeat="index in dotatourneys"><a href="http://liquipedia.net{{index.href}}#Group_Stage">{{index.Tournament}}</a></p>
-		</div>
-		<div class="column">
-			<h1> Dota Highlights</h1>
+				<!-- <h2> Today's Games</h2>
+					<p ng-repeat="games in dotagames">{{games.teams[0].name}} vs. {{games.teams[1].name}} Tournament {{games.tournament.name}} {{games.t_round}} {{games.time}}</p> -->
+				<h2> Ongoing Dota Tournaments</h2>
+				<p ng-repeat="index in dotatourneys"><a href="http://liquipedia.net{{index.href}}#Group_Stage">{{index.Tournament}}</a></p>
+			</div>
+			<div class="column">
+				<h1> Dota Highlights (Buggy)</h1>
 
 				<p ng-repeat="index in dotavods">{{index.Team}}  <a href="http://www.gosugamers.net{{index.hyperlink}}">Link</a> Date Added: {{index.date_added}}</p>
+			</div>
 		</div>
-	</div>
+		<div class="nhl" ng-if="nhl">
+			<div class="column">
+				<h2 style="display: block"> Today's NHL Games</h2>
+					<h4 ng-show="loaded"> Matching Links with Games... </h4>
+					<div ng-show="loaded"  class="progress">
+  						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+					</div>
+					<p class="display: block" ng-repeat="index1 in nhlgames">{{index1.teams}}
+						Time: {{index1.time}}
+						<a ng-if="index1.href !== 'None'" href="https://www.reddit.com{{index1.href}}">Link</a> 
+						<p ng-if="index1.href.length == 4"> No Link Yet</p>
+						<p ng-if="index1.href == 'Ended'">Result: {{index1.score}}</p>
+					</p>
+			</div>
+			<div class="column">
+				<h1> Recent Highlights</h1>
+				 <button ng-click="showcard()"class="btn btn-primary" type="button">
+					   Show
+					  </button>
+				
+					<div ng-show="show" class="card">
+						<p ng-repeat="index in nhlvods">{{index.title}}
+							<br>
+							<a href="https://www.youtube.com/watch?v={{index.videoID}}"><img src="{{index.thumbnail}}"></a>
+					
+						</p>
+			</div>
+		</div>
+		
 </div>
 </body>
 </html>
