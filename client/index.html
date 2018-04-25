@@ -97,6 +97,14 @@
         $scope.homecss = "nav-link";
         $scope.dotacss = "nav-link active";
         $scope.nhlcss = "nav-link";
+        apifactory.getdotavods(function(callback){
+        //console.log(callback);
+        $scope.dotavods = callback;
+         });
+       apifactory.getdotatourneys(function(callback){
+       // console.log(callback);
+        $scope.dotatourneys = callback;
+      });
       }
       $scope.hometab = function(){
         $scope.dota = false;
@@ -113,40 +121,43 @@
         $scope.homecss = "nav-link";
         $scope.dotacss = "nav-link";
         $scope.nhlcss = "nav-link active"
+        $scope.loaded = true;
+        if($scope.nhlgames !== []){
+
+            apifactory.getnhl(function(callback){
+                $scope.nhlgames = callback;
+                $scope.loaded = false;
+            });
+        }
+        
       }
       $scope.showcard = function(){
         apifactory.getnhlvods(function(callback){
           $scope.nhlvods = callback;
           $scope.show = true;
         })
+        apifactory.getnba(function(callback){
+          $scope.nbavods = callback;
+        });
         
+
+
+
       }
       apifactory.getnbaschedule(function(callback){
         $scope.nbaschedule = callback;
         $scope.loaded = false;
       })
-      apifactory.getdotavods(function(callback){
-        //console.log(callback);
-        $scope.dotavods = callback;
-      });
-      apifactory.getdotatourneys(function(callback){
-       // console.log(callback);
-        $scope.dotatourneys = callback;
-      });
-      apifactory.getnba(function(callback){
-        $scope.nbavods = callback;
-      });
+      
+    
+
+      // #### BROKEN SPORTS RADAR ###
       // apifactory.getdotagames(function(callback){
       //   $scope.dotagames = callback;
       //   //console.log($scope.dotagames);
       //   $scope.loaded = false;
       // });
-      apifactory.getnhl(function(callback){
-
-        $scope.nhlgames = callback;
-       // console.log($scope.nhlgames);
-        $scope.loaded = false;
-      });
+      
     });
 
     angular.factory("apifactory", function($http){
@@ -183,11 +194,14 @@
         })
       }
       functions.getdotatourneys = function(callback){
-        $http.get('/getdotatourneys').success(function(result){
+        if(dotatourneys != []){
+          $http.get('/getdotatourneys').success(function(result){
           dotatourneys = result;
 
           callback(dotatourneys);
         })
+        }
+        
       }
       functions.getnba = function(callback){
         $http.get('/getnba').success(function(result){
@@ -196,11 +210,14 @@
         })
       }
       functions.getdotavods = function(callback){
-          $http.get('/getdotavods').success(function(result){
+        if(dotavods != []){
+            $http.get('/getdotavods').success(function(result){
             //console.log(result);
             dotavods = result;
             callback(dotavods);
           })
+        }
+          
       }
       return functions;
     })

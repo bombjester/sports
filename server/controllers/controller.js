@@ -151,7 +151,7 @@ module.exports = (function() {
 			
 		},
 		getdotatourneys: function(req,res){
-			console.log("trying to get dota toruneys");
+			//console.log("trying to get dota toruneys");
 			var finaldotatourney = [];
 			var dotatemp = [];
 			var dotatemp2 = [];
@@ -185,6 +185,7 @@ module.exports = (function() {
 		},
 
 		getnbaschedule: function(req,res){
+
 			var hrefs = [];
 			var finalarray = [];
 			osmosis.get("https://www.reddit.com/r/nbastreams/")
@@ -214,23 +215,42 @@ module.exports = (function() {
 						matches[x] = matches[x].replace(/\d=/gm, "");
 						matches[x] = matches[x].replace("^", "");
 					}
-			//NEED TO CHANGE TO PST
-					//console.log(matches);
-					//console.log(hrefs);
+		
+					
 					for (x in matches){
+						//console.log(matches[x]);
+						var pst = "";
 						var pushed = false;
 						var wordmatch = matches[x].substring(0, matches[x].indexOf(" ")).toLowerCase();
-						//console.log(wordmatch);
+						var match = matches[x].substring(0, matches[x].indexOf("("));
+								
+
+						//###### TO CHANGE TO PST
+
+						if(matches[x].search("ET") >= 1){	
+							var ettime = matches[x].substring(matches[x].indexOf("("), matches[x].indexOf("ET"));
+							//console.log(time);
+							ettime = ettime.replace("(", "");
+							ettime = moment(ettime, "h:mm a").toDate();
+							pst = "(" + moment(ettime).subtract(3, 'hours').format("h:mm a") + " PST)";
+							
+						}
+						else{
+							pst = matches[x].substring(matches[x].indexOf("("), matches[x].length);
+							
+						}
+						// console.log(pst, match);
+						
 						for( y in hrefs){
 							//console.log(hrefs[y].hrefs);
 							if(hrefs[y].hrefs.search(wordmatch)>=1){
-								finalarray.push({game: matches[x], href: hrefs[y].hrefs});
+								finalarray.push({game: match,time: pst, href: hrefs[y].hrefs});
 								pushed = true;
 							}
 						}
 						if (pushed == false){
 
-							finalarray.push({game: matches[x], href: "None"});
+							finalarray.push({game: match,time: pst, href: "None"});
 							
 						}
 
@@ -288,7 +308,7 @@ module.exports = (function() {
 				//console.log(hrefs);
 				request("http://api.sportradar.us/nhl/trial/v5/en/games/"+today+"/schedule.json?api_key=azsj4dc8kn7xu8z3ebpwke34", function (error, response, body){
 					var jsonfied = JSON.parse(body);
-				
+					
 					for (x in jsonfied.games){
 						//console.log(jsonfied.games[x]);
 						var pst = moment(jsonfied.games[x].scheduled);
@@ -299,6 +319,10 @@ module.exports = (function() {
 						else if(jsonfied.games[x].status == "closed"){
 							finalarray.push({match_id: jsonfied.games[x].id, title: jsonfied.games[x].title, time: "Ended", teams: jsonfied.games[x].away.name + " (seed: " + jsonfied.games[x].away.seed + ") at " + jsonfied.games[x].home.name + " (seed " + jsonfied.games[x].home.seed + ")", href: "Ended", score: jsonfied.games[x].away_points+" - " + jsonfied.games[x].home_points});
 						}
+						else if(jsonfied.games[x].status == "unnecessary"){
+
+						}
+							
 						else{
 							finalarray.push({match_id: jsonfied.games[x].id, title: jsonfied.games[x].title, time: time, teams: jsonfied.games[x].away.name + " (seed: " + jsonfied.games[x].away.seed + ") at " + jsonfied.games[x].home.name + " (seed " + jsonfied.games[x].home.seed + ")", href: "None" });
 						}
@@ -307,13 +331,10 @@ module.exports = (function() {
 						//console.log(finalarray[i]);
 						var space_index = finalarray[i].teams.indexOf(" ");
 						space_index = Number.parseInt(space_index)+1;
+						var text_array = finalarray[i].teams.split(" ");
 						
-						var wordmatch = finalarray[i].teams.substring(space_index, finalarray[i].teams.indexOf(" (seed")).toLowerCase();
+						var wordmatch = text_array[1].toLowerCase();
 							
-							//hardcoded exceptions to finding second word
-							if(wordmatch == "golden knights"){
-								wordmatch = "knights";
-							}
 						
 						for(y in hrefs){
 							
@@ -343,7 +364,7 @@ module.exports = (function() {
 				//console.log(body);
 				var jsonfied = JSON.parse(body);
 				for (x in jsonfied.items){
-					if(jsonfied.items[x].snippet.title[0] == "N" && jsonfied.items[x].snippet.title[1] == "H"){
+					if(jsonfied.items[x].snippet.title[0] == "N" && jsonfied.items[x].snippet.title[1] == "H" && jsonfied.items[x].snippet.title[4] == "H"){
 						//console.log(jsonfied.items[x]);
 						array.push({title: jsonfied.items[x].snippet.title,  videoID: jsonfied.items[x].id.videoId, thumbnail: jsonfied.items[x].snippet.thumbnails.default.url});
 					}

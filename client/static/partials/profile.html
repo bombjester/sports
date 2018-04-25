@@ -30,7 +30,7 @@
 					<div ng-show="loaded"  class="progress">
   						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 					</div>
-					<p ng-repeat="index in nbaschedule">{{index.game}}
+					<p ng-repeat="index in nbaschedule">{{index.game}} {{index.time}}
 					<a ng-if="index.href != 'None'" href="https://www.reddit.com{{index.href}}">Link</a> 
 					<p ng-if="index.href.length == 4"> No Link Yet</p>
 				</p>
