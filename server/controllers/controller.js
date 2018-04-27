@@ -290,8 +290,9 @@ module.exports = (function() {
 			})
 		},
 		getnhlgames :function(req,res){
-			var today = moment().format("YYYY/MM/DD");
-			
+			var today = moment();
+			today = today.tz('America/Los_angeles').format("YYYY/MM/DD");
+
 			var hrefs = [];
 			var finalarray = [];
 
@@ -314,7 +315,7 @@ module.exports = (function() {
 						var pst = moment(jsonfied.games[x].scheduled);
 						var time = pst.tz('America/Los_angeles').format('h:mm a z');
 						if(jsonfied.games[x].status == "inprogress"){
-							finalarray.push({match_id: jsonfied.games[x].id, title: jsonfied.games[x].title, time: "Live", teams: jsonfied.games[x].away.name + " (seed: " + jsonfied.games[x].away.seed + ") at " + jsonfied.games[x].home.name + " (seed " + jsonfied.games[x].home.seed + ")", href: "" });
+							finalarray.push({match_id: jsonfied.games[x].id, title: jsonfied.games[x].title, time: "Live", teams: jsonfied.games[x].away.name + " (seed: " + jsonfied.games[x].away.seed + ") at " + jsonfied.games[x].home.name + " (seed " + jsonfied.games[x].home.seed + ")", href: "None", score: "" });
 						}
 						else if(jsonfied.games[x].status == "closed"){
 							finalarray.push({match_id: jsonfied.games[x].id, title: jsonfied.games[x].title, time: "Ended", teams: jsonfied.games[x].away.name + " (seed: " + jsonfied.games[x].away.seed + ") at " + jsonfied.games[x].home.name + " (seed " + jsonfied.games[x].home.seed + ")", href: "Ended", score: jsonfied.games[x].away_points+" - " + jsonfied.games[x].home_points});
@@ -324,7 +325,7 @@ module.exports = (function() {
 						}
 							
 						else{
-							finalarray.push({match_id: jsonfied.games[x].id, title: jsonfied.games[x].title, time: time, teams: jsonfied.games[x].away.name + " (seed: " + jsonfied.games[x].away.seed + ") at " + jsonfied.games[x].home.name + " (seed " + jsonfied.games[x].home.seed + ")", href: "None" });
+							finalarray.push({match_id: jsonfied.games[x].id, title: jsonfied.games[x].title, time: time, teams: jsonfied.games[x].away.name + " (seed: " + jsonfied.games[x].away.seed + ") at " + jsonfied.games[x].home.name + " (seed " + jsonfied.games[x].home.seed + ")", href: "None", score: ""});
 						}
 					}
 					for(i in finalarray){
@@ -334,11 +335,15 @@ module.exports = (function() {
 						var text_array = finalarray[i].teams.split(" ");
 						
 						var wordmatch = text_array[1].toLowerCase();
+						var wordmatch2 = text_array[2].toLowerCase();
+						if(wordmatch2 == "(seed:" ){
 							
+							wordmatch2 = "";
+						}
 						
 						for(y in hrefs){
 							
-							if(hrefs[y].hrefs.search(wordmatch)>=1 && finalarray[i].time != "Ended"){ 
+							if (hrefs[y].hrefs.search(wordmatch)>=1 || hrefs[y].hrefs.search(wordmatch2)>=1){ 
 								
 								finalarray[i].href = hrefs[y].hrefs;
 								

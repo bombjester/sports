@@ -125,9 +125,13 @@
         if($scope.nhlgames !== []){
 
             apifactory.getnhl(function(callback){
+
                 $scope.nhlgames = callback;
                 $scope.loaded = false;
+                console.log($scope.nhlgames);
             });
+
+
         }
         
       }

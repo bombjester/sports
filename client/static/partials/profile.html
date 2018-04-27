@@ -72,12 +72,16 @@
 					<div ng-show="loaded"  class="progress">
   						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 					</div>
-					<p class="display: block" ng-repeat="index1 in nhlgames">{{index1.teams}}
-						Time: {{index1.time}}
-						<a ng-if="index1.href !== 'None'" href="https://www.reddit.com{{index1.href}}">Link</a> 
-						<p ng-if="index1.href.length == 4"> No Link Yet</p>
-						<p ng-if="index1.href == 'Ended'">Result: {{index1.score}}</p>
-					</p>
+					<div style="display: block" ng-repeat="index1 in nhlgames">
+						<p>{{index1.teams}}
+							Time: {{index1.time}} 
+							<p ng-if="index1.score !== ''">Result: {{index1.score}}</p>
+							<a ng-if="index1.href !== 'None' && index1.href !== 'Ended'" href="https://www.reddit.com{{index1.href}}">Link</a> 
+							<p ng-if="index1.href.length == 4"> No Link Yet</p>
+						
+						</p>
+					</div>
+					
 			</div>
 			<div class="column">
 				<h1> Recent Highlights</h1>
