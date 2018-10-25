@@ -189,19 +189,18 @@ module.exports = (function() {
 			var hrefs = [];
 			var finalarray = [];
 			osmosis.get("https://www.reddit.com/r/nbastreams/")
-			.find("//*[@id='siteTable']/div/div/div/p/a/@href")
+			.find("//*[@data-click-id='body']/@href")
 			.set("hrefs")
 			.data(function(results){
-				//console.log(results.hrefs);
+				
+				
 				if(results.hrefs.search("/game_thread_") >=1){
+
 					hrefs.push(results);
 				}
-			})
-				
-				
+			})	
 			.done(function(){
 				request('http://www.espn.com/nba/bottomline/scores', function (error, response, body) {
-				//console.log(body);
 					var regex = /left\s*(.*?)\s*nba/g;
 					var matches = [];
 					while(m = regex.exec(body)){
@@ -209,10 +208,10 @@ module.exports = (function() {
 					}
 					
 					for (x in matches){
-						//console.log(matches[x]);
+						// console.log(matches[x]);
 						matches[x] = matches[x].replace(/%20/g, " ");
 						matches[x] = matches[x].replace("&", "");
-						matches[x] = matches[x].replace(/\d=/gm, "");
+						matches[x] = matches[x].replace(/\d{0,2}=/gm, "");
 						matches[x] = matches[x].replace("^", "");
 					}
 		
@@ -242,10 +241,12 @@ module.exports = (function() {
 						// console.log(pst, match);
 						
 						for( y in hrefs){
-							//console.log(hrefs[y].hrefs);
+							
 							if(hrefs[y].hrefs.search(wordmatch)>=1){
+
 								finalarray.push({game: match,time: pst, href: hrefs[y].hrefs});
 								pushed = true;
+								hrefs[y].hrefs = " ";
 							}
 						}
 						if (pushed == false){
@@ -270,7 +271,7 @@ module.exports = (function() {
 			var array = [];
 			var today = moment().format("YYYY-MM-DD");
 
-			request("http://api.sportradar.us/dota2-t1/en/schedules/"+today+"/schedule.json?api_key=k5xrd9rb25ux6p6mqe2mghyc", function (error, response, body){
+			request("http://api.sportradar.us/dota2-t1/en/schedules/"+today+"/schedule.json?api_key=ue93yskywp5gk4esz7mjxrzm", function (error, response, body){
 
 				var jsonfied = JSON.parse(body);
 				// for(games in jsonfied.){
@@ -376,6 +377,9 @@ module.exports = (function() {
 				}
 				res.json(array);
 			})
+		},
+		getnflgames: function(req,res){
+			
 		},
 
 	

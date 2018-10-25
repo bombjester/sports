@@ -29,4 +29,7 @@ module.exports = function(app){
 	app.get("/getdotagames", function(req,res){
 		doge.getdotagames(req,res);
 	})
+	app.get("/getnflgames", function(req,res){
+		doge.getnflgames(req,res);
+	})
 }

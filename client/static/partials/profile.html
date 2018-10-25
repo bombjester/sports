@@ -16,9 +16,14 @@
 		  <li class="nav-item">
 		    <a ng-class="dotacss" href="" ng-click="dotatab()">Dota</a>
 		  </li>
-		  <li class="nav-item">
+		 <!--  <li class="nav-item">
 		    <a ng-class="nhlcss" ng-click="nhltab()" href="">NHL</a>
 		  </li>
+		  <li class="nav-item">
+		    <a ng-class="nflcss" ng-click="nfltab()" href="">NFL</a>
+		  </li> -->
+
+
 		  <!-- <li class="nav-item">
 		    <a class="nav-link disabled" href="#">Disabled</a>
 		  </li> -->
@@ -95,9 +100,14 @@
 							<a href="https://www.youtube.com/watch?v={{index.videoID}}"><img src="{{index.thumbnail}}"></a>
 					
 						</p>
+					</div>
 			</div>
-		</div>
 		
+		</div>
+		<div class="nfl" ng-if="nfl">
+			<h1> test</h1>
+		</div>
+	</div>
 </div>
 </body>
 </html>

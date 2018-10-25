@@ -78,6 +78,7 @@
       $scope.dota = false;
       $scope.nhl = false;
       $scope.home = true;
+      $scope.nfl = false;
       $scope.show = false;
       $scope.loaded = true;
       $scope.dotavods = [];
@@ -85,6 +86,7 @@
       $scope.dotatourneys = [];
       $scope.nbaschedule = [];
       $scope.nhlvods = [];
+      $scope.nflgames = [];
       $scope.dotagames = [];
       $scope.nhlgames = [];
       $scope.homecss = "nav-link active";
@@ -93,8 +95,10 @@
       $scope.dotatab = function(){
         $scope.dota = true;
         $scope.home = false;
+        $scope.nfl = false;
         $scope.nhl = false;
         $scope.homecss = "nav-link";
+        $scope.nflcss = "nav-link"
         $scope.dotacss = "nav-link active";
         $scope.nhlcss = "nav-link";
         apifactory.getdotavods(function(callback){
@@ -106,19 +110,37 @@
         $scope.dotatourneys = callback;
       });
       }
+      $scope.nfltab = function(){
+           $scope.dota = false;
+        $scope.nhl = false;
+        $scope.home = false;
+        $scope.nfl = true;
+        $scope.homecss = "nav-link";
+        $scope.dotacss = "nav-link";
+        $scope.nhlcss = "nav-link";
+        $scope.nflcss = "nav-link active";
+        apifactory.getnflgames(function(callback){
+          $scope.nflgames = callback;
+        })
+
+      }
       $scope.hometab = function(){
         $scope.dota = false;
         $scope.nhl = false;
+        $scope.nfl = false;
         $scope.home = true;
+        $scope.nflcss = "nav-link"
         $scope.homecss = "nav-link active";
         $scope.dotacss = "nav-link";
         $scope.nhlcss = "nav-link";
       }
       $scope.nhltab = function(){
+        $scope.nfl = false;
         $scope.dota = false;
         $scope.nhl = true;
         $scope.home = false;
         $scope.homecss = "nav-link";
+        $scope.nflcss = "nav-link"
         $scope.dotacss = "nav-link";
         $scope.nhlcss = "nav-link active"
         $scope.loaded = true;
@@ -172,7 +194,14 @@
       var nhlgames = [];
       var nhlvods = [];
       var dotagames = [];
+      var nflgames = [];
 
+      functions.getnflgames = function(callback){
+        $http.get('/getnflgames').success(function(result){
+          nflgames = result;
+          callback(nflgames);
+        })
+      }
       functions.getdotagames = function(callback){
         $http.get('/getdotagames').success(function(result){
           dotagames = result;

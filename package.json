@@ -10,10 +10,10 @@
     "express": "~4.10.0",
     "gosugamers-api": "latest",
     "moment": "latest",
+    "moment-timezone": "latest",
     "mongoose": "^4.4.2",
-    "osmosis": "latest",
-    "request": "latest",
-    "moment-timezone": "latest"
+    "osmosis": "^1.1.8",
+    "request": "latest"
   },
   "engines": {
     "node": "8.9.4",
