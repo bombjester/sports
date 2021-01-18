@@ -7,18 +7,18 @@
     "@angular/material": "^5.2.0",
     "body-parser": "^1.14.2",
     "ejs": "1.0.0",
-    "express": "~4.10.0",
-    "gosugamers-api": "^0.1.2",
+    "express": "latest",
+    "gosugamers-api": "latest",
     "moment": "latest",
-    "moment-timezone": "^0.5.32",
-    "mongoose": "^4.4.2",
+    "moment-timezone": "latest",
+    "mongoose": "^5.11.12",
     "osmosis": "^1.1.8",
     "package.json": "^2.0.1",
     "request": "latest"
   },
   "engines": {
-    "node": "8.9.4",
-    "npm": "5.6.0"
+    "node": "latest",
+    "npm": "latest"
   },
   "scripts": {
     "start": "node server.js"
