@@ -19,8 +19,6 @@
   "engines": {
     "node": "latest",
     "npm": "latest"
-  },
-  "scripts": {
-    "start": "node server.js"
   }
+ 
 }
