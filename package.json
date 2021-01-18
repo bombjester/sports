@@ -2,11 +2,11 @@
   "name": "sports",
   "description": "highlights",
   "dependencies": {
-    "@angular/animations": "^5.2.3",
+    "@angular/animations": "latest",
     "@angular/cdk": "^5.2.0",
     "@angular/material": "^5.2.0",
-    "body-parser": "^1.14.2",
-    "ejs": "1.0.0",
+    "body-parser": "latest",
+    "ejs": "latest",
     "express": "latest",
     "gosugamers-api": "^0.1.2",
     "moment": "latest",
@@ -20,5 +20,4 @@
     "node": "latest",
     "npm": "latest"
   }
- 
 }
