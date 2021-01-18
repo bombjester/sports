@@ -6,7 +6,7 @@
     "@angular/cdk": "^5.2.0",
     "@angular/material": "^5.2.0",
     "body-parser": "^1.14.2",
-    "ejs": "1.0.0",
+    "ejs": "2.5.5",
     "express": "latest",
     "gosugamers-api": "^0.1.2",
     "moment": "latest",
