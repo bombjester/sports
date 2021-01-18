@@ -8,11 +8,12 @@
     "body-parser": "^1.14.2",
     "ejs": "1.0.0",
     "express": "~4.10.0",
-    "gosugamers-api": "latest",
+    "gosugamers-api": "^0.1.2",
     "moment": "latest",
-    "moment-timezone": "latest",
+    "moment-timezone": "^0.5.32",
     "mongoose": "^4.4.2",
     "osmosis": "^1.1.8",
+    "package.json": "^2.0.1",
     "request": "latest"
   },
   "engines": {
