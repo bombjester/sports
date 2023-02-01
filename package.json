@@ -11,7 +11,7 @@
     "gosugamers-api": "^0.1.2",
     "moment": "latest",
     "moment-timezone": "latest",
-    "mongoose": "^5.11.12",
+    "mongoose": "^5.13.15",
     "osmosis": "^1.1.8",
     "package.json": "^2.0.1",
     "request": "latest"
